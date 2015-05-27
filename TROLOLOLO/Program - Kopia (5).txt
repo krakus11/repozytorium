@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int newton(int n, int k)
+{
+if(k==0)
+  return 1;
+if(k==n)
+  return 1;
+return newton(n-1, k-1)+newton(n-1,k);
+}
+
+main()
+{
+int n,k,wynik;
+do
+  {
+  printf("prosze podac dodatnie k mniejsze lub rowne od n\n");
+  scanf("%i",&n);
+  scanf("%i",&k);
+  }while(k>n||k<0);
+wynik=newton(n,k);
+printf(" n po k wynosi:%i\n", wynik);
+}
+  
