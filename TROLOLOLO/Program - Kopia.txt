@@ -1,0 +1,86 @@
+#include <stdio.h>
+
+#include <math.h>
+
+
+float* miejsca(float* tab)
+
+{
+
+float DELTA,x1,x2;
+
+DELTA=tab[1]*tab[1]-4*tab[0]*tab[2];
+
+if(DELTA>=0)
+
+{
+
+x1=(-tab[1]+sqrt(DELTA))/(2*tab[0]);
+
+x2=(-tab[1]-sqrt(DELTA))/(2*tab[0]);
+
+tab[0]=2;
+
+tab[1]=x1;
+
+tab[2]=x2;
+
+}
+
+else
+
+{
+
+tab[0]=0;
+
+}
+
+return tab;
+
+}
+
+main()
+
+{
+
+float* wynik;
+
+float wspol[3];
+
+float a,b,c;
+
+printf("prosze podac parametry a,b,c rownania: ax^2+bx+c=0 \n");
+
+scanf("%f",&a);
+
+scanf("%f",&b);
+
+scanf("%f",&c);
+
+wspol[0]=a;
+
+wspol[1]=b;
+
+wspol[2]=c;
+
+wynik=miejsca(wspol);
+
+if(wynik[0]==2)
+
+ {
+
+ printf("ilosc miejsc rozwiazan %f\n",wynik[0]);
+
+ printf("pierwsze miejsce zerowe: %.5f\n",wynik[1]);
+
+ printf("drugie miejsce zerowe: %.5f\n",wynik[2]);
+
+ }
+
+ else
+
+ printf("ilosc miejse rozwiazan %f\n",wynik[0]);
+
+system("pause");
+
+}
