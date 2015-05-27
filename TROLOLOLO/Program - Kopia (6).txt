@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void add(int**ptab, int n, int new_elm)
+{
+int licznik;
+int* pointer;
+pointer=malloc((n+1)*sizeof(int));
+if(pointer==NULL)
+  {
+  *ptab=NULL;
+  return;
+  }
+for(licznik=0;licznik<n;licznik++)
+  pointer[licznik]=(*ptab)[licznik];
+pointer[n]=new_elm;
+
+free(*ptab);
+*ptab=pointer;
+}
+
+main()
+{
+int licznik;
+int* ptab=NULL;
+for(licznik=0;licznik<10;licznik++)
+  add(&ptab,licznik,(licznik+2)*3);
+  if(ptab==NULL)
+    printf("nie ma miejsca");
+for(licznik=0;licznik<10;licznik++)
+  printf("%3i",ptab[licznik]);
+}
