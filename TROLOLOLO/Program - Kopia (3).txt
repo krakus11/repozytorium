@@ -1,0 +1,33 @@
+#include <stdio.h>
+# define ROZMIAR 1000
+char * isElement(char *tab, char znak)
+    {
+    int i;
+    for(i=0;tab[i]!='\0';i++)
+      {
+      if(tab[i]==znak)
+        return &tab[i];
+      }
+    return NULL;
+    }
+
+   
+main()
+  {
+  char napis[ROZMIAR ];
+  char znak;
+  char *adres;
+  char wynik;
+  printf("prosze wpisac dowolny napis\n");
+  fgets(napis,ROZMIAR ,stdin);
+  printf("prosze wpisac znak do sprawdzenia\n");
+  scanf("%c",&znak);
+  adres=isElement(napis,znak);
+  if(adres==NULL)
+     printf("nie ma tego znaku\n");
+  else
+    {
+    wynik=*adres; 
+    printf("oto wynik: %c\n",wynik);
+    }
+  } 
