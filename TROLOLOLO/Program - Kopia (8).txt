@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define N 141
+
+void deleteMatrix(int*** ptab, int n);
+
+int** createMatrix(int n)
+{
+int counter;
+int** indeks;
+indeks=malloc(n*sizeof(int*));
+if(indeks==NULL)
+  return NULL;
+for(counter=0;counter<n;counter++)
+  {
+  indeks[counter]=malloc(n*sizeof(int));
+  if(indeks[counter]==NULL)
+    {
+    deleteMatrix(&indeks, counter);
+    return NULL;
+    }
+  }
+return indeks;
+}
+
+
+
+void fillMatrix(int** tab, int n)
+{
+int counter,counter2, natural=1;
+for(counter=0;counter<n;counter++)
+  for(counter2=0;counter2<n;counter2++)
+    {
+    tab[counter][counter2]=natural;
+    natural++;
+    }
+}
+
+
+void copyMatrix(int*** dest, int** src, int n)
+{
+int counter, counter2;
+*dest=createMatrix(n);
+if(*dest==NULL)
+  return;
+for(counter=0;counter<n;counter++)
+  for(counter2=0;counter2<n;counter2++)
+    (*dest)[counter][counter2]=src[counter][counter2];
+}
+ 
+
+void deleteMatrix(int*** ptab, int n)
+{
+  int counter;
+  for(counter=0;counter<n;counter++)
+    {
+    free((*ptab)[counter]);
+    (*ptab)[counter]=NULL;
+    }
+  free(*ptab);
+  *ptab=NULL;
+  fprintf(stderr,"nie ma miejsca\n");
+}       
+
+
+     
+main()
+{
+int liczba=N;
+int** tab;
+int** tab2;
+int counter,counter2;
+tab=createMatrix(liczba);
+if(tab==NULL)
+  {
+  printf("nie ma miejsca\n");
+  return;
+  }
+fillMatrix(tab,liczba);
+copyMatrix(&tab2,tab,liczba);
+
+for(counter=0;counter<liczba;counter++)
+  {
+  for(counter2=0;counter2<liczba;counter2++)
+    printf("%4i",tab[counter][counter2]);
+  printf("\n");
+  }
+printf("\ndruga tablica\n");  
+for(counter=0;counter<liczba;counter++)
+  {
+  for(counter2=0;counter2<liczba;counter2++)
+    printf("%4i",tab2[counter][counter2]);
+  printf("\n");
+  }  
+deleteMatrix(&tab, liczba);
+deleteMatrix(&tab2, liczba);
+system("pause");
+}
