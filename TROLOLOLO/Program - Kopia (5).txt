@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int newton(int n, int k)
+int newton(int n, i
 {
 if(k==0)
   return 1;
