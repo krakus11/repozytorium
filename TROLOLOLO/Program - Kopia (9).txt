@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define ROZMIAR 100
+
+char* delete(char *napis)
+{    
+    int lenght=0, meter;
+    char* back;
+    for(meter=0;napis[meter]!='\0';meter++)
+        lenght++;
+    back=malloc((lenght)*sizeof(char));
+    if(back==NULL)
+        return NULL;
+    back[lenght-1]='\0';//niezbedznik dla dalszych obliczen//
+    lenght--;    
+    for(meter=0;meter<lenght;meter++)
+        {
+        back[meter]=napis[meter];
+        }        
+        printf("\n");
+    free(napis);
+    napis=NULL;
+    return back;
+}
+
+main()
+{
+    char* tab;
+    char* wynik;
+    int lenght=0, meter;
+    tab=malloc(ROZMIAR*sizeof(char));
+    printf("prosze wpisac napis\n");
+    fgets(tab,ROZMIAR,stdin);
+    
+    for(meter=0;tab[meter]!='\0';meter++)//pozbywam sie enter//
+        lenght++;
+    tab[lenght-1]='\0';
+    
+    wynik=delete(tab);
+    if(wynik==NULL)
+        return;
+    lenght=0;    
+    for(meter=0;wynik[meter]!='\0';meter++)
+        lenght++;    
+    for(meter=0;meter<lenght;meter++)
+        printf("%c",wynik[meter]);
+    printf("\n");
+        
+    do
+    {
+    wynik=delete(wynik);
+    if(wynik==NULL)
+        return;
+    lenght=0;    
+    for(meter=0;wynik[meter]!='\0';meter++)
+        lenght++;    
+    for(meter=0;meter<lenght;meter++)
+        printf("%c",wynik[meter]);
+    printf("\n");    
+    }while(wynik[0]!='\0');    
+    system("pause");
+}
