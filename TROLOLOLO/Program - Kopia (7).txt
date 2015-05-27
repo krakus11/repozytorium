@@ -1,0 +1,140 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define N 21
+
+struct osoba{
+char Nazwisko[N];
+char Imie[N];
+long int nr;
+};
+
+struct osoba* add(struct osoba* kniga,int n)
+    {
+    int counter;
+    struct osoba* pointer;
+    struct osoba nowa;
+    long int nowynr;
+    
+    pointer=malloc((n+1)*sizeof(struct osoba));
+    if(pointer==NULL)
+      return;
+      
+    for(counter=0;counter<n;counter++)
+      pointer[counter]=kniga[counter];
+      
+    printf("prosze podac nazwisko\n");
+    fflush(stdin);
+    fgets(nowa.Nazwisko,N,stdin);
+    printf("prosze podac imie\n");
+    fflush(stdin);
+    fgets(nowa.Imie,N,stdin);
+    
+    do
+    {
+    printf("prosze podac nr\n");
+    fflush(stdin);
+    scanf("%li",&nowynr);
+    }while(nowynr>999999999||nowynr<99999999);
+    nowa.nr=nowynr;
+    
+    pointer[n]=nowa;
+    
+    free(kniga);
+    kniga=NULL;
+    
+    return pointer;
+    }
+
+
+int szukaj_a_dostaniesz_kosteczke(long int poszukiwany, struct osoba* kniga, int amount)
+    {
+    int counter;
+    struct osoba help;
+    int location=0;
+    
+    for(counter=0;counter<amount;counter++)
+    {
+    help=(kniga)[counter];
+    if(poszukiwany==help.nr)
+    location=counter+1;
+    }
+    
+    if(location==0)
+    return 0;
+    
+    return location;    
+    }
+
+
+
+void show(struct osoba* pointer)
+    {
+    int next;    
+    struct osoba odczyt;
+    odczyt= *pointer;
+    printf("\nnazwisko: ");
+    puts(odczyt.Nazwisko);
+    printf("imie: ");
+    puts(odczyt.Imie);
+    printf("numer: %li", odczyt.nr);
+    do
+        {
+        printf("\naby kontynulowac wcisnij 1");
+        fflush(stdin);
+        scanf("%i", &next);
+        }while(next!=1);
+    }
+    
+
+main()
+{
+    struct osoba* baza=NULL;
+    int licznik=0, operacja, miejsce;
+    long int numer;
+    do
+    {
+        printf("\njezeli chcesz wpisac nowy nr wybierz 1\njezlei chcesz znalezc nr wybierz 2\njezeli chcesz pokazac dana osobe wybierz 3\njezeli chcesz zakonczyc prace wybierz 0\n");
+        fflush(stdin);
+        scanf("%i", &operacja);
+        printf("\n");
+        switch(operacja)
+            {
+              case 1:
+                baza=add(baza,licznik);
+                licznik++;
+                break;
+            case 2:
+                printf("prosze podac poszukiwany nr\n");
+                fflush(stdin);
+                scanf("%li", &numer);
+                miejsce=szukaj_a_dostaniesz_kosteczke(numer, baza, licznik);
+                if(miejsce==0)
+                    printf("nie ma takiego nr\n");
+                else    
+                printf("podany nr odpowiada osobie na miejscu %i\n", miejsce);
+                do
+                    {
+                    printf("\naby kontynulowac wcisnij 1");
+                    fflush(stdin);
+                    scanf("%i", &next);
+                    }while(next!=1);
+                break;
+            case 3:
+                printf("prosze podac nr osoby: ");
+                fflush(stdin);
+                scanf("%i", &miejsce);
+                while(miejsce>licznik)
+                {
+                printf("nie ma takiej osby\n");
+                printf("prosze podac nr osoby: ");
+                fflush(stdin);
+                scanf("%i", &miejsce);
+                }
+                show(&(baza[miejsce-1]));
+                break;    
+            }
+        system("cls");        
+    }while(operacja!=0);                    
+                        
+    system("pause");    
+}
